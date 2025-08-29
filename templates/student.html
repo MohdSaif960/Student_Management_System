@@ -1,0 +1,64 @@
+<html>
+<head>
+
+    <title>Student List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: grey;
+        }
+        h2 {
+            text-align: center;
+            color: black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student List Template</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+        </tr>
+        {% for student in student %}
+        <tr>
+            <td>{{ student.student_id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.course }}</td>
+            <td>{{ student.phone_number }}</td>
+            <td>{{ student.address }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" style="text-align: center; color: red;">No students found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,209 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="{% static 'css/styles3.css' %}">
+    <style>
+        /* Form Styling */
+        .form-section {
+            max-width: 600px;
+            margin: 40px auto;
+            background: linear-gradient(to bottom right, #ffffff, #f0f8ff);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: scale(1.03);
+        }
+
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4a90e2;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s ease;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        .form-actions {
+            margin-top: 25px;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+            background-color: #4a90e2;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-actions .btn:hover {
+            background-color: #357ab8;
+        }
+
+        /* Dark Mode */
+        body.dark-mode .form-section {
+            background: #2c2c3f;
+            color: #eee;
+        }
+
+        body.dark-mode form input,
+        body.dark-mode form textarea {
+            background: #3a3a5c;
+            color: #eee;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode form label {
+            color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>📚 DASHBOARD</h2>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'display' %}">Dashboard</a></li>
+                    <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                    <li><a href="{% url 'display' %}">View Students</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Student Management System</h1>
+                <div class="dark-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Dark Mode</span>
+                </div>
+            </header>
+
+            <!-- Form Section -->
+            <section class="form-section">
+                <h2>ADD NEW STUDENT</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="student_id">Student ID:</label>
+                    <input type="text" id="student_id" name="student_id" placeholder="Enter Student ID" required>
+
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter Full Name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" required>
+
+                    <label for="course">Course:</label>
+                    <input type="text" id="course" name="course" placeholder="Enter Course" required>
+
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="tel" id="phone_number" name="phone_number" placeholder="Enter Phone Number" required>
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter Address" required></textarea>
+
+                 <!--   <label for="educational_institution">Educational Institution:</label>
+                    <input type="text" name="educational_institution" id="educational_institution" placeholder="Educational Institution" required> -->
+
+
+                    <label for="profile_image">Profile Image:</label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*">
+
+                    <!-- IMAGE PREVIEW KA DIV (optional) -->
+                    <div id="imagePreview" style="margin-top:10px;">
+                        <!-- JavaScript se upload hote hi preview aayega -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- Dark Mode Script -->
+    <script>
+        window.onload = function () {
+            var darkMode = localStorage.getItem('darkMode');
+            var checkbox = document.getElementById('darkModeToggle');
+
+            if (darkMode === 'on') {
+                document.body.classList.add('dark-mode');
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'on');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'off');
+                }
+            });
+
+            // Simple Image Preview Logic
+            const imageInput = document.getElementById('profile_image');
+            const preview = document.getElementById('imagePreview');
+
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.innerHTML = '<img src="' + e.target.result + '" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">';
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = "";
+                }
+            });
+        };
+    </script>
+
+    <footer>
+        <p>© 2025 Student Management System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

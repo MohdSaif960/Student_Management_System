@@ -1,0 +1,226 @@
+{% load static %}
+
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Student</title>
+    <link rel="stylesheet" href="{% static 'css/styles3.css' %}">
+    <style>
+        /* Form Section Styling */
+        .form-section {
+            max-width: 600px;
+            margin: 40px auto;
+            background: linear-gradient(to bottom right, #f9fafc, #e6edf5);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .form-section:hover {
+            transform: scale(1.05);
+        }
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4a90e2;
+        }
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s ease;
+        }
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        .form-actions {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .form-actions button,
+        .form-actions a {
+            flex: 1;
+            margin: 5px;
+            text-align: center;
+        }
+        .form-actions .btn {
+            padding: 10px 0;
+            font-size: 15px;
+        }
+        /* Image Preview Styling */
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #4a90e2;
+            display: block;
+            margin: 15px auto;
+        }
+        /* Dark mode adjustments */
+        body.dark-mode .form-section {
+            background: #2c2c3f;
+            color: #eee;
+        }
+        body.dark-mode form input,
+        body.dark-mode form textarea {
+            background: #3a3a5c;
+            color: #eee;
+            border: 1px solid #555;
+        }
+        body.dark-mode form label {
+            color: #eee;
+        }
+        body.dark-mode .form-section h2 {
+            color: #1abc9c;
+        }
+        body.dark-mode .image-preview {
+            border-color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>📚 DASHBOARD</h2>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'display' %}">Dashboard</a></li>
+                    <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                    <li><a href="{% url 'display' %}">View Students</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header>
+                <h1>Student Management System</h1>
+                <div class="dark-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Dark Mode</span>
+                </div>
+            </header>
+
+            <!-- Update Form Section -->
+            <section class="form-section">
+                <h2>UPDATE STUDENT</h2>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label for="student_id">Student ID:</label>
+                    <input type="text" id="student_id" name="student_id" value="{{ student.student_id }}" required>
+
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ student.name }}" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ student.email }}" required>
+
+                    <label for="course">Course:</label>
+                    <input type="text" id="course" name="course" value="{{ student.course }}" required>
+
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ student.phone_number }}" required>
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3" required>{{ student.address }}</textarea>
+
+                 <!--    <label for="educational_institution">Educational Institution:</label>
+                    <input type="text" name="educational_institution" id="educational_institution" value="{{ student.educational_institution }}"> -->
+
+                    <label for="profile_image">Profile Image:</label>
+
+                    <!-- Image Preview Code Fix -->
+                    <div id="imagePreviewContainer">
+                        {% if student.profile_image %}
+                            <img src="{{ student.profile_image.url }}" alt="{{ student.name }}" class="image-preview" id="imagePreview">
+                        {% else %}
+                            <img src="{% static 'images/student_img.png' %}" alt="Default Image" class="image-preview" id="imagePreview">
+                        {% endif %}
+                    </div>
+
+                    <input type="file" id="profile_image" name="profile_image" onchange="previewImage(event)">
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn add">✔️ Update</button>
+                        <a href="{% url 'display' %}" class="btn view">📄 Back</a>
+                        <a href="{% url 'display' %}" class="btn delete">❌ Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /* Dark Mode Toggle Script */
+        window.onload = function () {
+            var darkMode = localStorage.getItem('darkMode');
+            var checkbox = document.getElementById('darkModeToggle');
+
+            if (darkMode === 'on') {
+                document.body.classList.add('dark-mode');
+                checkbox.checked = true;
+                setTextColor('#eee');
+            } else {
+                setTextColor('#333');
+            }
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'on');
+                    setTextColor('#eee');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'off');
+                    setTextColor('#333');
+                }
+            });
+        };
+
+        function setTextColor(color) {
+            var cells = document.querySelectorAll('th, td, label, input, textarea');
+            for (var i = 0; i < cells.length; i++) {
+                cells[i].style.color = color;
+            }
+        }
+
+        // Function to preview the image
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <footer>
+        <p>© 2025 Student Management System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

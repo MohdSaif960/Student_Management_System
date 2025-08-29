@@ -1,0 +1,212 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student</title>
+    <link rel="stylesheet" href="{% static 'css/styles3.css' %}">
+    <style>
+        .delete-container {
+            background: white;
+            margin: 80px auto;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+        .delete-container:hover {
+            transform: scale(1.02);
+        }
+        .delete-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4a90e2;
+        }
+        .delete-container h3 {
+            color: #d9534f;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .delete-container p {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+        }
+
+        .student-info {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .student-info p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #333;
+        }
+        .student-info .highlight {
+            display: inline-block;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        /* Image Preview Styling */
+        .delete-image-preview {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #d9534f;
+            display: block;
+            margin: 10px auto 20px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        .delete-image-preview:hover {
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        .action-buttons button,
+        .action-buttons a {
+            width: 48%;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .delete-btn {
+            background: #d9534f;
+        }
+        .delete-btn:hover {
+            background: #c9302c;
+        }
+        .cancel-btn {
+            background: #5a5a5a;
+        }
+        .cancel-btn:hover {
+            background: #333;
+        }
+
+        /* Dark Mode Styling */
+        body.dark-mode .delete-container {
+            background: #2c2c3f;
+            color: #eee;
+        }
+        body.dark-mode .student-info {
+            background-color: #2e2e3e;
+            border-color: #666;
+            box-shadow: none;
+        }
+        body.dark-mode .student-info .highlight {
+            background-color: #444;
+            color: #eee;
+        }
+        body.dark-mode .student-info p {
+            color: #eee;
+        }
+        body.dark-mode .delete-image-preview {
+            border-color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>📚 DASHBOARD</h2>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'display' %}">Dashboard</a></li>
+                    <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                    <li><a href="{% url 'display' %}">View Students</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Student Management System</h1>
+                <div class="dark-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Dark Mode</span>
+                </div>
+            </header>
+
+            <div class="delete-container">
+                <h2>DELETE STUDENT</h2>
+                <h3>Are you sure you want to delete this student?</h3>
+                <p>This action cannot be undone. Please confirm before proceeding.</p>
+
+                <div class="student-info">
+                    {% if student.profile_image %}
+                        <img src="{{ student.profile_image.url }}" alt="{{ student.name }}" class="delete-image-preview">
+                    {% else %}
+                        <img src="{% static 'images/student_img.png' %}" alt="Default Image" class="delete-image-preview">
+                    {% endif %}
+
+                    <p><span class="highlight">Student ID: {{ student.student_id }}</span></p>
+                    <p><span class="highlight">Name: {{ student.name }}</span></p>
+                    <p><span class="highlight">Email: {{ student.email }}</span></p>
+                    <p><span class="highlight">Course: {{ student.course }}</span></p>
+                    <p><span class="highlight">Phone: {{ student.phone_number }}</span></p>
+                    <p><span class="highlight">Address: {{ student.address }}</span></p>
+                    <!--<p><span class="highlight">Educational Institution: {{ student.educational_institution }}</span></p> -->
+                </div>
+
+                <form method="post" class="action-buttons">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-btn">Yes, Delete</button>
+                    <a href="{% url 'display' %}" class="cancel-btn">Cancel</a>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Dark Mode Script -->
+    <script>
+        window.onload = function () {
+            var darkMode = localStorage.getItem('darkMode');
+            var checkbox = document.getElementById('darkModeToggle');
+
+            if (darkMode === 'on') {
+                document.body.classList.add('dark-mode');
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'on');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'off');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
