@@ -1,0 +1,435 @@
+/* === Reset karna sabhi elements ka default margin & padding === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Padding/border ko width mein include karta hai */
+}
+
+/* === Body ka style set karna === */
+body {
+    font-family: 'Segoe UI', sans-serif; /* Font style set karna */
+    background: #f4f6f8; /* Background color light grey */
+    color: #333; /* Text ka default color dark grey */
+    transition: background 0.3s, color 0.3s; /* Smooth color change ke liye transition */
+}
+
+
+/* SIDEBAR CSS */
+
+
+/* === Overall layout ke liye flex use karna (Sidebar + Content) === */
+.dashboard-container {
+    display: flex; /* Sidebar aur content side-by-side show karne ke liye */
+    min-height: 100vh; /* Full height screen tak layout */
+}
+
+/* === Sidebar styling === */
+.sidebar {
+    background: #2c3e50; /* Dark background */
+    color: #fff; /* Text white */
+    width: 220px; /* Sidebar ki width */
+    padding: 20px; /* Andar ka gap */
+    position: fixed; /* Sidebar fixed position mein */
+    height: 100%; /* Full height le raha hai */
+}
+
+.sidebar h2 {
+    text-align: center; /* Heading center mein */
+    margin-bottom: 30px; /* Niche gap */
+}
+
+.sidebar ul {
+    list-style: none; /* Bullets hatana */
+}
+
+.sidebar ul li {
+    margin: 20px 0; /* Har item ke beech gap */
+}
+
+.sidebar ul li a {
+    text-decoration: none; /* Underline hatana */
+    color: #ecf0f1; /* Light text color */
+    font-size: 16px; /* Font size */
+    transition: 0.7s; /* Hover par smooth effect */
+}
+
+.sidebar ul li a:hover {
+    color: #1abc9c; /* Hover pe text color change */
+}
+
+
+/* MAIN BODY KE LIYE JAHAN SE HEADER HEADING CHALU HO RHI HAI */
+
+/* === Main content styling === */
+.main-content {
+    margin-left: 220px; /* Sidebar ki width jitna space chhodna */
+    padding: 10px; /* Andar gap */
+    flex: 1; /* Baaki bacha hua area le lena */
+}
+
+/* === Header styling === */
+header {
+    background-color: #4a90e2; /* Blue background */
+    padding: 20px 0; /* Upar-niche padding */
+    text-align: center; /* Text center mein */
+    color: white; /* Text white */
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); /* Shadow effect niche */
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem; /* Heading ka size */
+    font-weight: 600; /* Boldness */
+}
+
+/* === Search bar section === */
+.search-section {
+    margin: 30px auto; /* Vertical margin, horizontal center */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.search-form {
+    display: flex;
+    gap: 10px; /* Input aur button ke beech gap */
+}
+
+.search-form input {
+    padding: 10px 15px;
+    border: 2px solid #3498db; /* Blue border */
+    border-radius: 20px; /* Rounded corners */
+    width: 250px; /* Input field ka width */
+}
+
+.search-form button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-form button:hover {
+    background: #2980b9; /* Hover pe dark blue */
+}
+
+
+/* === Student Table ke liye styling with visible borders === */
+
+.student-table table {
+    width: 100%; /* Full width le lega */
+    border-collapse: collapse; /* Borders collapse karne ke liye */
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Shadow */
+    border: 1px solid #ccc; /* Outer border */
+}
+
+.student-table th, .student-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ccc; /* Row aur column ke beech line */
+}
+
+.student-table th {
+    background: #3498db; /* Heading background blue */
+    color: white;
+}
+
+.student-table tr:hover {
+    background-color: #f2f2f2; /* Row hover effect */
+}
+
+
+/* === Buttons ke liye common class === */
+
+.btn {
+    padding: 7px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    margin: 0 2px;
+    font-size: 13px;
+}
+
+/* Alag-alag action ke buttons ke colors */
+.btn.update {
+    background-color: #f39c12; /* Orange for update */
+}
+
+.btn.delete {
+    background-color: #e74c3c; /* Red for delete */
+}
+
+.btn.add {
+    background: #2ecc71; /* Green for add */
+}
+
+.btn.view {
+    background: #1abc9c; /* Cyan for view */
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.actions .btn {
+    margin-right: 10px;
+}
+
+/* === Footer ke liye styling === */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #ecf0f1;
+    font-size: 16px;
+    color: #555;
+    margin-top: 30px;
+}
+
+
+/* === Dark Mode ke liye alag background aur color set karna === */
+
+body.dark-mode {
+    background: #1e1e2f;
+    color: #eee;
+}
+
+body.dark-mode .sidebar {
+    background: #1c1c2c;
+}
+
+body.dark-mode .main-content {
+    background: #1e1e2f;
+}
+
+body.dark-mode header {
+    background: #2a2a3c;
+    color: #fff;
+}
+
+body.dark-mode .student-table table {
+    background: #2c2c3f;
+    color: #eee;
+}
+
+body.dark-mode .student-table th {
+    background: #3a3a5c;
+}
+
+body.dark-mode .search-form input {
+    background: #2e2e3e;
+    color: #fff;
+    border-color: #555;
+}
+
+body.dark-mode .search-form button {
+    background: #444;
+}
+
+body.dark-mode footer {
+    background: #2a2a3a;
+    color: #ccc;
+}
+
+/* === Dark Mode Toggle Switch ka style === */
+.dark-mode-toggle {
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Toggle switch ka outer style */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+}
+
+/* Hidden input (toggle checkbox) */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Slider background style */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius: 34px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.4s;
+}
+
+/* Toggle ka white circular dot */
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+/* Jab dark mode on ho, toggle blue aur dot right shift ho */
+input:checked + .slider {
+    background-color: #4a90e2;
+}
+
+input:checked + .slider::before {
+    transform: translateX(35px);
+}
+
+/* Dark mode mein toggle label ka text color light hona chahiye */
+body.dark-mode .dark-mode-toggle {
+    color: #eee;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* === yhn se mobile phones ke liye css add kr rhe hai jisse phones main project sahi se khul sake === */
+
+/* ================================= */
+/* === RESPONSIVE DESIGN SECTION === */
+/* ================================= */
+
+/* Tablets and below */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .form-section {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .search-form input,
+    .search-form button {
+        width: 90%;
+    }
+
+    .student-table table,
+    .student-table th,
+    .student-table td {
+        font-size: 14px;
+    }
+
+    .dark-mode-toggle {
+        position: static;
+        margin: 10px auto;
+        justify-content: center;
+    }
+
+    footer {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .sidebar ul li a {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .form-section {
+        padding: 15px;
+    }
+
+    .student-table th,
+    .student-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .dark-mode-toggle {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .slider {
+        width: 50px;
+        height: 20px;
+    }
+
+    .slider::before {
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(28px);
+    }
+}
+
+@media (max-width: 480px) {
+    .student-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .highlight {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .back-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
